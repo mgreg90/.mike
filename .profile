@@ -2,6 +2,9 @@ printf "Loading .mike/.profile... "
 
 export DOTMIKE="$HOME/.mike"
 
+# Load secrets
+source "$DOTMIKE/.secrets"
+
 # Add .mike/bin to path
 export PATH="$PATH:$HOME/.mike/bin"
 
