@@ -13,3 +13,8 @@ add this to your shell profile:
 ```shell
 source $HOME/.mike/.profile
 ```
+
+create a secrets file
+```shell
+$ touch .secrets
+```
