@@ -1,0 +1,37 @@
+#!/usr/bin/env ruby
+
+require 'httparty'
+require 'fileutils'
+
+ENV_MAP = {
+  'dev' => 'development',
+  'qa' => 'qa',
+  'prod' => 'production'
+}
+
+args = ARGV.first.split(' ')
+
+session = args.first&.gsub('"', '')
+
+environment = ENV_MAP[args[1]&.downcase] || 'development'
+
+response = HTTParty.get(
+  "https://eagle-workflow.#{environment}.carecloud.com/session/#{session}/variables",
+  format: :json
+)
+
+vars_dir = File.join("/Users", "mikegregory", ".mike", 'apps', 'vars', 'saved_vars')
+file = File.join(vars_dir, "#{session}.json")
+
+FileUtils.mkdir_p(vars_dir)
+FileUtils.touch(file)
+
+File.open(file, 'w') do |f|
+  if response.code >= 400
+    f.puts response.to_s
+  else
+    f.puts JSON.pretty_generate(response.parsed_response)
+  end
+end
+
+`/usr/local/bin/code #{file}`

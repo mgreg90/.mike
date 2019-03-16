@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+ENV_MAP = {
+  'dev' => 'development',
+  'qa' => 'qa',
+  'prod' => 'production'
+}
+
+environment = ENV_MAP[ARGV.first] || 'development'
+
+`open https://alfresco.#{environment}.carecloud.com/activiti-app/editor/#/processes`

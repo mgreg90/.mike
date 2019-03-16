@@ -1,1 +1,3 @@
 .secrets
+apps/google-cloud-sdk
+.commit-msg

@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+
+require 'json'
+
+if ARGV.first.nil?
+  puts "No json given!"
+  exit
+end
+json_hash = nil
+begin
+  json_hash = JSON.parse(ARGV.first)
+rescue JSON::ParserError
+  puts "Failed to parse JSON!"
+  exit
+end
+
+def parse_object(json_hash)
+  # TODO
+end
+
+result = '{' + parse_object(json_hash) + '}'
+
+print result
