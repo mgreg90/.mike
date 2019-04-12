@@ -1,0 +1,3 @@
+#!/usr/bin/env ruby
+
+`open https://bamboo.carecloud.com/allPlans.action`

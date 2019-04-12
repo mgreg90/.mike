@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+
+environment = ARGV.first || 'dev'
+
+ENV_MAP = {
+  'dev' => 'https://kibana-cluster00.development.carecloud.com/app/kibana#/discover',
+  'qa' => 'https://kibana-logging.qa.carecloud.com/app/kibana#/discover',
+  'prod' => 'https://kibana-logging.production.carecloud.com/app/kibana#/discover'
+}
+
+url = ENV_MAP[environment]
+
+`open #{url}`

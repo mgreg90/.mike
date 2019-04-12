@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+require 'fileutils'
+require 'pathname'
+
+dirname = ARGV.first
+
+DIR_ROOT = Pathname.new(ENV['HOME']).join('dev-projects', 'cc')
+
+target_dir = DIR_ROOT.join(dirname)
+
+`/usr/local/bin/code #{target_dir}`

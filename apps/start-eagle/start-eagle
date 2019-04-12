@@ -1,0 +1,62 @@
+#!/usr/bin/osascript
+
+tell application "iTerm"
+    activate
+    select first window
+
+    tell current session of current window
+        split horizontally with default profile
+        split horizontally with default profile
+        split horizontally with default profile
+        split horizontally with default profile
+        split horizontally with default profile
+        split horizontally with default profile
+        split horizontally with default profile
+        split horizontally with default profile
+    end tell
+
+    tell first session of current tab of current window
+        write text "cd \"$CARECLOUD_DIR/eagle_app\""
+        write text "yarn start"
+    end tell
+
+    tell second session of current tab of current window
+        write text "cd \"$CARECLOUD_DIR/eagle_api_gateway\""
+        write text "yarn start"
+    end tell
+
+    tell fifth session of current tab of current window
+        write text "cd \"$CARECLOUD_DIR/conductor_api\""
+        write text "ngrok http 3001"
+    end tell
+
+    tell sixth session of current tab of current window
+        write text "cd \"$CARECLOUD_DIR/conductor_api\""
+        write text "yarn start"
+    end tell
+
+    tell seventh session of current tab of current window
+        write text "cd \"$CARECLOUD_DIR/conductor/docker\""
+        write text "docker-compose up"
+    end tell
+
+    tell eighth session of current tab of current window
+        write text "cd \"$CARECLOUD_DIR/conductor_metadata\""
+        write text "bin/startup"
+    end tell
+
+    tell third session of current tab of current window
+        write text "cd \"$CARECLOUD_DIR/eagle_workflow\""
+        delay 3
+        write text "endpoint=\"$(ngrok-url)\""
+        write text "WORKFLOW_ENDPOINT__CONDUCTOR=\"$endpoint\" yarn start"
+    end tell
+
+    tell fourth session of current tab of current window
+        write text "cd \"$CARECLOUD_DIR/eagle_workflow\""
+        delay 3
+        write text "endpoint=\"$(ngrok-url)\""
+        write text "WORKFLOW_ENDPOINT__CONDUCTOR=\"$endpoint\" yarn consume"
+    end tell
+
+end tell

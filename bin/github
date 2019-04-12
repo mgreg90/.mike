@@ -1,3 +1,11 @@
 #!/usr/bin/env ruby
 
-`open http://github.com`
+repo = ARGV.first
+
+url = if repo
+  "https://github.com/CareCloud/#{repo}"
+else
+  "https://github.com/orgs/CareCloud/dashboard"
+end
+
+`open #{url}`

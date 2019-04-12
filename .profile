@@ -8,6 +8,8 @@ source "$DOTMIKE/.secrets"
 # Add .mike/bin to path
 export PATH="$PATH:$HOME/.mike/bin"
 
+export CARECLOUD_DIR="$HOME/dev-projects/cc"
+
 ### Colors
 export DEFAULT="\e[39m"
 export BLACK="\e[30m"
@@ -33,28 +35,9 @@ export NORMAL="\e[0m"
 ### Set Command Line Prompt
 export PROMPT="$(echo $BOLD$WHITE)[%*]$(echo $NORMAL$DEFAULT) $PROMPT"
 
-### Uiversal Env Vars
-
+### Universal Env Vars
 export VISUAL="code"
-
-### Aliases
-
-    ## Navigation
-    alias ls="ls -a"
-    alias dp="cd $HOME/dev-projects"
-    alias cc="cd $HOME/dev-projects/cc"
-    alias mike="cd $HOME/.mike"
-    alias t="touch"
-
-    ## Git
-    alias git="hub"
-    alias gri="git rebase -i"
-    alias gc-f="git commit -F .commit-msg"
-    alias gcm="git commit -m"
-    alias gca="git commit --amend"
-
-    ## Misc
-    alias sb="source ~/.zshrc"
+export BAT_THEME="TwoDark"
 
 ### Enable Autosuggestions
 # Weird bug in this right now...
@@ -68,10 +51,33 @@ eval "$(pyenv init -)"
 
 # Gvm (golang version manager)
 source /Users/mikegregory/.gvm/scripts/gvm
+export DEFAULT_GOPATH="$HOME/go"
+export GOPATH="$DEFAULT_GOPATH:$HOME/dev-projects/cc"
+export PATH="$PATH:$GOPATH/bin"
 
 # Point to OpenSSL 1.0.2
 export CPPFLAGS=-I/usr/local/opt/openssl/include
 export LDFLAGS=-L/usr/local/opt/openssl/lib
+
+### Aliases
+
+    ## Navigation
+    alias ls="ls -a"
+    alias dp="cd $HOME/dev-projects"
+    alias cc="cd $CARECLOUD_DIR"
+    alias godir="cd $DEFAULT_GOPATH"
+    alias mike="cd $HOME/.mike"
+    alias t="touch"
+
+    ## Git
+    alias git="hub"
+    alias gri="git rebase -i"
+    alias gc-f="git commit -F .commit-msg"
+    alias gcm="git commit -m"
+    alias gca="git commit --amend"
+
+    ## Misc
+    alias sb="source ~/.zshrc"
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/mikegregory/.mike/apps/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/mikegregory/.mike/apps/google-cloud-sdk/path.zsh.inc'; fi

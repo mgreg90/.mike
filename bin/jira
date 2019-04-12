@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+ticket_number = ARGV.first
+
+url = if ticket_number
+  "https://jira.carecloud.com/browse/#{ticket_number}"
+else
+  "https://jira.carecloud.com/secure/RapidBoard.jspa?"
+end
+
+`open #{url}`
