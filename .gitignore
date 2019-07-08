@@ -1,3 +1,7 @@
 .secrets
 apps/google-cloud-sdk
 .commit-msg
+apps/search/saved_searches
+apps/vars/saved_vars
+apps/session/saved_sessions
+apps/start-eagle

@@ -16,7 +16,7 @@ session = args.first&.gsub('"', '')
 environment = ENV_MAP[args[1]&.downcase] || 'development'
 
 response = HTTParty.get(
-  "https://deepstream-api.#{environment}.carecloud.com/record/#{session}",
+  "https://workflow.#{environment}.carecloud.com/session/#{session}",
   format: :json
 )
 

@@ -1,15 +1,3 @@
-printf "Loading .mike/.profile... "
-
-export DOTMIKE="$HOME/.mike"
-
-# Load secrets
-source "$DOTMIKE/.secrets"
-
-# Add .mike/bin to path
-export PATH="$PATH:$HOME/.mike/bin"
-
-export CARECLOUD_DIR="$HOME/dev-projects/cc"
-
 ### Colors
 export DEFAULT="\e[39m"
 export BLACK="\e[30m"
@@ -35,9 +23,33 @@ export NORMAL="\e[0m"
 ### Set Command Line Prompt
 export PROMPT="$(echo $BOLD$WHITE)[%*]$(echo $NORMAL$DEFAULT) $PROMPT"
 
+printf "${LIGHT_BLUE}${BOLD}Loading .mike/.profile... ${NORMAL}${DEFAULT}"
+
 ### Universal Env Vars
 export VISUAL="code"
 export BAT_THEME="TwoDark"
+
+source_if_present() {
+  if [[ -f "$1" ]]; then
+    source "$1"
+  else
+    echo "${RED}Unable to source - File not found: ${BOLD}\`$1\`${NORMAL}${DEFAULT}"
+  fi
+}
+
+export DOTMIKE="$HOME/.mike"
+
+# Load secrets
+source_if_present "$DOTMIKE/.secrets"
+
+# Add .mike/bin to path
+export PATH="$PATH:$HOME/.mike/bin"
+
+export CARECLOUD_DIR="$HOME/dev-projects/cc"
+
+export HISTFILE=~/.zsh_history
+export HISTSIZE=100000
+export SAVEHIST=$HISTSIZE
 
 ### Enable Autosuggestions
 # Weird bug in this right now...
@@ -50,7 +62,7 @@ export PATH="$PATH:$HOME/.rvm/bin"
 eval "$(pyenv init -)"
 
 # Gvm (golang version manager)
-source /Users/mikegregory/.gvm/scripts/gvm
+source_if_present /Users/mikegregory/.gvm/scripts/gvm
 export DEFAULT_GOPATH="$HOME/go"
 export GOPATH="$DEFAULT_GOPATH:$HOME/dev-projects/cc"
 export PATH="$PATH:$GOPATH/bin"
@@ -58,6 +70,9 @@ export PATH="$PATH:$GOPATH/bin"
 # Point to OpenSSL 1.0.2
 export CPPFLAGS=-I/usr/local/opt/openssl/include
 export LDFLAGS=-L/usr/local/opt/openssl/lib
+
+# Add Personal bash completions
+source_if_present "$CARECLOUD_DIR/conductor_metadata/bin/point-completion.bash"
 
 ### Aliases
 
@@ -76,8 +91,11 @@ export LDFLAGS=-L/usr/local/opt/openssl/lib
     alias gcm="git commit -m"
     alias gca="git commit --amend"
 
-    ## Misc
-    alias sb="source ~/.zshrc"
+    ## Misc/Config
+    alias sb="source_if_present ~/.zshrc"
+    alias path="ruby -e \"puts ENV['PATH'].split(':')\""
+
+    export MAGICK_HOME="$HOME/ImageMagick-7.0.8"
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/mikegregory/.mike/apps/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/mikegregory/.mike/apps/google-cloud-sdk/path.zsh.inc'; fi
@@ -85,4 +103,4 @@ if [ -f '/Users/mikegregory/.mike/apps/google-cloud-sdk/path.zsh.inc' ]; then . 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/mikegregory/.mike/apps/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/mikegregory/.mike/apps/google-cloud-sdk/completion.zsh.inc'; fi
 
-echo "Success!"
+echo "${BOLD}${GREEN}Success!${NORMAL}${DEFAULT}"
